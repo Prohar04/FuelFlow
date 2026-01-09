@@ -328,44 +328,48 @@ const seedData = async () => {
     }
     console.log(`✅ Added initial inventory for all pumps`);
 
-    // 10. Create Sample Sales (20+ across different months)
-    console.log("\n🛒 Creating comprehensive sales data...");
+    // 10. Create Sample Sales (100+ across 6 months)
+    console.log("\n🛒 Creating comprehensive sales data (6 months)...");
     const fuelTypes = ["Petrol", "Diesel", "Octane"];
     const salesData = [];
     let saleCount = 0;
 
-    // Generate sales for last 3 months
-    for (let monthOffset = 2; monthOffset >= 0; monthOffset--) {
+    // Generate sales for last 6 months - realistic daily sales
+    for (let monthOffset = 5; monthOffset >= 0; monthOffset--) {
       const monthDate = new Date();
       monthDate.setMonth(monthDate.getMonth() - monthOffset);
+      const daysInMonth = new Date(monthDate.getFullYear(), monthDate.getMonth() + 1, 0).getDate();
       
-      // Generate 15-20 sales per month
-      const salesPerMonth = 15 + Math.floor(Math.random() * 6);
+      // Generate 50-70 sales per month (realistic daily fuel sales)
+      const salesPerMonth = 50 + Math.floor(Math.random() * 20);
       for (let i = 0; i < salesPerMonth; i++) {
         const saleDate = new Date(monthDate);
-        saleDate.setDate(1 + Math.floor(Math.random() * 28)); // Random day in month
+        saleDate.setDate(1 + Math.floor(Math.random() * daysInMonth)); 
         saleDate.setHours(Math.floor(Math.random() * 24), Math.floor(Math.random() * 60), 0, 0);
 
         const fuelType = fuelTypes[Math.floor(Math.random() * fuelTypes.length)];
         const fuelPrice = fuelType === "Petrol" ? 120.5 : fuelType === "Diesel" ? 110.0 : 135.0;
-        const quantity = 10 + Math.floor(Math.random() * 50);
+        const quantity = 20 + Math.floor(Math.random() * 80); // Larger quantities for realistic data
 
+        const isPump1 = Math.random() > 0.5;
         const sale = await Sale.create({
-          pumpId: Math.random() > 0.5 ? pump1._id : pump2._id,
-          cashierId: Math.random() > 0.5 ? cashier1._id : cashier2._id,
+          pumpId: isPump1 ? pump1._id : pump2._id,
+          cashierId: isPump1 ? (Math.random() > 0.5 ? cashier1._id : cashier3._id) : cashier2._id,
           fuelType,
           quantity,
           unitPrice: fuelPrice,
+          paymentMethod: "cash",
           createdAt: saleDate,
         });
 
-        const pumpCode = sale.pumpId.toString() === pump1._id.toString() ? pump1.code : pump2.code;
+        const pumpCode = isPump1 ? pump1.code : pump2.code;
         const dateStr = saleDate.toISOString().split("T")[0].replace(/-/g, "");
         const receiptNo = `${pumpCode}/${dateStr}/${String(saleCount + 1).padStart(4, "0")}`;
         
         const receipt = await Receipt.create({
           saleId: sale._id,
           receiptNo,
+          createdAt: saleDate,
         });
 
         sale.receiptId = receipt._id;
@@ -376,7 +380,7 @@ const seedData = async () => {
           pumpId: sale.pumpId,
           fuelType,
           type: "stock_out",
-          quantity: -quantity,
+          quantity,
           refType: "sale",
           refId: sale._id,
           createdAt: saleDate,
@@ -385,28 +389,30 @@ const seedData = async () => {
         saleCount++;
       }
     }
-    console.log(`✅ Created ${saleCount} sales across 3 months`);
+    console.log(`✅ Created ${saleCount} sales across 6 months`);
 
-    // 11. Create Refill Orders (20+ across different months)
-    console.log("\n🚚 Creating refill orders...");
+    // 11. Create Refill Orders (50+ across 6 months)
+    console.log("\n🚚 Creating refill orders (6 months)...");
     let refillCount = 0;
-    for (let monthOffset = 2; monthOffset >= 0; monthOffset--) {
+    for (let monthOffset = 5; monthOffset >= 0; monthOffset--) {
       const monthDate = new Date();
       monthDate.setMonth(monthDate.getMonth() - monthOffset);
+      const daysInMonth = new Date(monthDate.getFullYear(), monthDate.getMonth() + 1, 0).getDate();
       
-      const refillsPerMonth = 10 + Math.floor(Math.random() * 5);
+      const refillsPerMonth = 15 + Math.floor(Math.random() * 10);
       for (let i = 0; i < refillsPerMonth; i++) {
         const refillDate = new Date(monthDate);
-        refillDate.setDate(1 + Math.floor(Math.random() * 28));
+        refillDate.setDate(1 + Math.floor(Math.random() * daysInMonth));
         refillDate.setHours(Math.floor(Math.random() * 24), Math.floor(Math.random() * 60), 0, 0);
 
         const fuelType = fuelTypes[Math.floor(Math.random() * fuelTypes.length)];
-        const quantity = 500 + Math.floor(Math.random() * 1000);
+        const quantity = 1000 + Math.floor(Math.random() * 2000);
         const supplier = Math.random() > 0.5 ? supplier1 : supplier2;
+        const isPump1 = Math.random() > 0.5;
 
         const order = await RefillOrder.create({
-          pumpId: Math.random() > 0.5 ? pump1._id : pump2._id,
-          managerId: Math.random() > 0.5 ? manager1._id : manager2._id,
+          pumpId: isPump1 ? pump1._id : pump2._id,
+          managerId: isPump1 ? manager1._id : manager2._id,
           supplierId: supplier._id,
           items: [{
             fuelType,
@@ -421,10 +427,10 @@ const seedData = async () => {
         refillCount++;
       }
     }
-    console.log(`✅ Created ${refillCount} refill orders across 3 months`);
+    console.log(`✅ Created ${refillCount} refill orders across 6 months`);
 
-    // 12. Create Attendance Records (20+ across different months)
-    console.log("\n📅 Creating attendance records...");
+    // 12. Create Attendance Records (100+ across 6 months)
+    console.log("\n📅 Creating attendance records (6 months)...");
     const allEmployees = [
       { id: cashier1._id, pump: pump1._id },
       { id: cashier2._id, pump: pump2._id },
@@ -434,13 +440,13 @@ const seedData = async () => {
     ];
     let attendanceCount = 0;
 
-    for (let monthOffset = 2; monthOffset >= 0; monthOffset--) {
+    for (let monthOffset = 5; monthOffset >= 0; monthOffset--) {
       const monthDate = new Date();
       monthDate.setMonth(monthDate.getMonth() - monthOffset);
       const daysInMonth = new Date(monthDate.getFullYear(), monthDate.getMonth() + 1, 0).getDate();
 
       for (const emp of allEmployees) {
-        // 20-25 days per month per employee
+        // 20-25 days per month per employee (realistic work schedule)
         const workDays = 20 + Math.floor(Math.random() * 6);
         const attendanceDates = new Set();
 
@@ -469,13 +475,13 @@ const seedData = async () => {
         }
       }
     }
-    console.log(`✅ Created ${attendanceCount} attendance records across 3 months`);
+    console.log(`✅ Created ${attendanceCount} attendance records across 6 months`);
 
-    // 13. Create Payroll Records (20+ across different months)
-    console.log("\n💰 Creating payroll records...");
+    // 13. Create Payroll Records (30 records across 6 months)
+    console.log("\n💰 Creating payroll records (6 months)...");
     let payrollCount = 0;
 
-    for (let monthOffset = 2; monthOffset >= 0; monthOffset--) {
+    for (let monthOffset = 5; monthOffset >= 0; monthOffset--) {
       const monthDate = new Date();
       monthDate.setMonth(monthDate.getMonth() - monthOffset);
       
@@ -525,10 +531,10 @@ const seedData = async () => {
         payrollCount++;
       }
     }
-    console.log(`✅ Created ${payrollCount} payroll records across 3 months`);
+    console.log(`✅ Created ${payrollCount} payroll records across 6 months`);
 
-    // 14. Create Shift Schedules (20+ across different months)
-    console.log("\n🕐 Creating shift schedules...");
+    // 14. Create Shift Schedules (100+ across 6 months)
+    console.log("\n🕐 Creating shift schedules (6 months)...");
     let shiftCount = 0;
     const shiftTypes = [
       { name: "Morning", start: 9, end: 17 },
@@ -536,12 +542,12 @@ const seedData = async () => {
       { name: "Night", start: 1, end: 9 },
     ];
 
-    for (let monthOffset = 1; monthOffset >= -1; monthOffset--) {
+    for (let monthOffset = 5; monthOffset >= -1; monthOffset--) {
       const monthDate = new Date();
       monthDate.setMonth(monthDate.getMonth() - monthOffset);
       const daysInMonth = new Date(monthDate.getFullYear(), monthDate.getMonth() + 1, 0).getDate();
 
-      for (let day = 1; day <= Math.min(daysInMonth, 20); day++) {
+      for (let day = 1; day <= Math.min(daysInMonth, 25); day++) {
         const shiftDate = new Date(monthDate);
         shiftDate.setDate(day);
 
@@ -557,12 +563,6 @@ const seedData = async () => {
           endTime.setHours(shiftType.end, 0, 0, 0);
 
           // Determine role: cashier employees are cashiers, others are fuelBoy
-          const roleMap = {
-            cashier: 'cashier',
-            fuelBoy: 'fuelBoy',
-            security: 'security',
-          };
-          
           const isCashier = emp.id.toString() === cashier1._id.toString() || emp.id.toString() === cashier2._id.toString() || emp.id.toString() === cashier3._id.toString();
           const role = isCashier ? 'cashier' : ['fuelBoy', 'security', 'general'][Math.floor(Math.random() * 3)];
 
@@ -581,7 +581,7 @@ const seedData = async () => {
         }
       }
     }
-    console.log(`✅ Created ${shiftCount} shift schedules across 3 months`);
+    console.log(`✅ Created ${shiftCount} shift schedules across 6 months`);
 
     // 15. Summary
     console.log("\n🎉 Database seeded successfully!\n");

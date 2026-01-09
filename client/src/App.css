@@ -1,0 +1,477 @@
+/* ============================================
+   FuelFlow - Production Level Styles
+   ============================================ */
+
+/* Global Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInFromLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInFromRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Main App Container */
+#root {
+  animation: fadeIn 0.5s ease-out;
+}
+
+/* Page Transitions */
+.page-container {
+  animation: slideUp 0.4s ease-out;
+}
+
+.dashboard-container {
+  animation: fadeIn 0.6s ease-out;
+}
+
+/* Card Animations */
+.card-enter {
+  animation: scaleIn 0.3s ease-out;
+}
+
+.card-hover {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+/* Loading Skeleton */
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
+}
+
+/* Button Animations */
+.btn-animate {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-animate:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.btn-animate:active {
+  transform: translateY(0);
+}
+
+.btn-animate::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+.btn-animate:active::before {
+  width: 300px;
+  height: 300px;
+}
+
+/* Input Focus Animation */
+input:focus,
+textarea:focus,
+select:focus {
+  animation: slideDown 0.3s ease-out;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* Modal Animations */
+.modal-overlay {
+  animation: fadeIn 0.3s ease-out;
+}
+
+.modal-content {
+  animation: slideUp 0.3s ease-out;
+}
+
+.modal-enter {
+  animation: scaleIn 0.3s ease-out;
+}
+
+/* Toast Notifications */
+.toast-notification {
+  animation: slideInFromRight 0.4s ease-out;
+}
+
+.toast-exit {
+  animation: slideInFromRight 0.4s ease-in reverse;
+}
+
+/* Badge Animation */
+.badge-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Status Indicators */
+.status-active::before {
+  content: '';
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #10b981;
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  margin-right: 0.5rem;
+}
+
+/* Chart Animation */
+.chart-container {
+  animation: fadeIn 0.8s ease-out;
+}
+
+/* Table Row Animation */
+tbody tr {
+  animation: fadeIn 0.4s ease-out;
+  transition: all 0.2s ease-out;
+}
+
+tbody tr:hover {
+  background-color: rgba(59, 130, 246, 0.05);
+  transform: scale(1.01);
+}
+
+/* Loading Spinner */
+.spinner {
+  animation: spin 1s linear infinite;
+}
+
+/* Badge Animations */
+.badge {
+  animation: scaleIn 0.3s ease-out;
+  transition: all 0.2s ease-out;
+}
+
+.badge:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+/* Gradient Text */
+.gradient-text {
+  background: linear-gradient(135deg, #3b82f6, #10b981);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: slideInFromLeft 0.5s ease-out;
+}
+
+/* Smooth Transitions */
+* {
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+button,
+a,
+input,
+select,
+textarea {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* List Animation */
+.list-item {
+  animation: slideInFromLeft 0.3s ease-out;
+}
+
+.list-item:nth-child(1) {
+  animation-delay: 0.05s;
+}
+.list-item:nth-child(2) {
+  animation-delay: 0.1s;
+}
+.list-item:nth-child(3) {
+  animation-delay: 0.15s;
+}
+.list-item:nth-child(n + 4) {
+  animation-delay: 0.2s;
+}
+
+/* Stat Card Animation */
+.stat-card {
+  animation: scaleIn 0.3s ease-out;
+}
+
+.stat-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15);
+}
+
+/* Success/Error States */
+.success-feedback {
+  animation: slideInFromRight 0.3s ease-out;
+  color: #10b981;
+}
+
+.error-feedback {
+  animation: slideInFromRight 0.3s ease-out;
+  color: #ef4444;
+}
+
+/* Breadcrumb Animation */
+.breadcrumb-item {
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* Sidebar Animation */
+.sidebar-open {
+  animation: slideInFromLeft 0.3s ease-out;
+}
+
+.sidebar-close {
+  animation: slideInFromLeft 0.3s ease-out reverse;
+}
+
+/* Header Animation */
+header {
+  animation: slideDown 0.3s ease-out;
+}
+
+/* Footer Animation */
+footer {
+  animation: slideUp 0.3s ease-out;
+}
+
+/* Tab Animation */
+.tab-content {
+  animation: fadeIn 0.3s ease-out;
+}
+
+.tab-switch {
+  animation: fadeIn 0.2s ease-out;
+}
+
+/* Dark Mode Transitions */
+[data-theme='dark'] {
+  color-scheme: dark;
+}
+
+[data-theme='light'] {
+  color-scheme: light;
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* Print Styles */
+@media print {
+  @page {
+    margin: 1cm;
+  }
+
+  body {
+    background: white;
+    color: black;
+  }
+
+  button,
+  .no-print {
+    display: none;
+  }
+}
+
+/* Responsive Animations */
+@media (max-width: 768px) {
+  .card-hover:hover {
+    transform: translateY(-2px);
+  }
+
+  .stat-card:hover {
+    transform: translateY(-4px);
+  }
+
+  .btn-animate:hover {
+    transform: translateY(-1px);
+  }
+}
+
+/* High Performance */
+.gpu-acceleration {
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+/* Focus Visible Styles */
+:focus-visible {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+/* Links */
+a {
+  position: relative;
+}
+
+a::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  bottom: -2px;
+  left: 0;
+  background-color: #3b82f6;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.3s ease-out;
+}
+
+a:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(59, 130, 246, 0.3);
+  border-radius: 4px;
+  transition: background 0.2s ease-out;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(59, 130, 246, 0.6);
+}
+
+[data-theme='dark'] ::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+[data-theme='dark'] ::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+[data-theme='dark'] ::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.4);
+}
