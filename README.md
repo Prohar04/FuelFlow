@@ -2,7 +2,6 @@
 
 <div align="center">
 
-[![GitHub License](https://img.shields.io/badge/license-MIT-blue.svg)](#license)
 [![Production Ready](https://img.shields.io/badge/status-Production%20Ready-brightgreen.svg)](#-deployment)
 [![Node.js](https://img.shields.io/badge/Node.js-v18%2B-green.svg)](https://nodejs.org)
 [![React](https://img.shields.io/badge/React-v18-blue.svg)](https://react.dev)
