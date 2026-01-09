@@ -1,0 +1,277 @@
+.shift-calendar-container {
+  background: var(--color-bg);
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: var(--shadow-sm);
+}
+
+.calendar-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.view-toggle {
+  display: flex;
+  gap: 8px;
+}
+
+.view-toggle button {
+  padding: 8px 16px;
+  border: 1px solid var(--color-border);
+  background: var(--color-bg);
+  color: var(--color-text);
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s;
+}
+
+.view-toggle button:hover {
+  background: var(--color-bg-secondary);
+}
+
+.view-toggle button.active {
+  background: var(--color-primary);
+  color: white;
+  border-color: var(--color-primary);
+}
+
+.legend {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  font-size: 13px;
+  color: var(--color-text-secondary);
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.legend-color {
+  width: 20px;
+  height: 14px;
+  border-radius: 3px;
+  display: inline-block;
+}
+
+/* Calendar customization */
+.rbc-calendar {
+  font-family: inherit;
+  color: var(--color-text);
+}
+
+.rbc-header {
+  padding: 10px 5px;
+  font-weight: 600;
+  background: var(--color-bg-secondary);
+  border-bottom: 2px solid var(--color-border);
+  color: var(--color-text);
+}
+
+.rbc-today {
+  background-color: rgba(59, 130, 246, 0.1);
+}
+
+.rbc-off-range {
+  color: var(--color-text-muted);
+}
+
+.rbc-off-range-bg {
+  background: var(--color-bg-tertiary);
+}
+
+.rbc-event {
+  padding: 4px 6px;
+  font-size: 12px;
+}
+
+.rbc-event:focus {
+  outline: 2px solid var(--color-primary);
+}
+
+.rbc-time-slot {
+  border-top: 1px solid var(--color-border);
+}
+
+.rbc-time-content {
+  border-top: 2px solid var(--color-border);
+}
+
+.rbc-day-slot .rbc-time-slot {
+  border-top: 1px solid var(--color-border);
+}
+
+.rbc-time-header-content {
+  border-left: 1px solid var(--color-border);
+}
+
+.rbc-time-content > * + * > * {
+  border-left: 1px solid var(--color-border);
+}
+
+.rbc-day-bg + .rbc-day-bg {
+  border-left: 1px solid var(--color-border);
+}
+
+.rbc-month-row + .rbc-month-row {
+  border-top: 1px solid var(--color-border);
+}
+
+.rbc-month-view {
+  border: 1px solid var(--color-border);
+  background: var(--color-bg);
+}
+
+.rbc-time-view {
+  border: 1px solid var(--color-border);
+  background: var(--color-bg);
+}
+
+.rbc-agenda-view {
+  background: var(--color-bg);
+}
+
+.rbc-agenda-view table {
+  border: 1px solid var(--color-border);
+}
+
+.rbc-agenda-date-cell,
+.rbc-agenda-time-cell {
+  color: var(--color-text);
+}
+
+.rbc-agenda-event-cell {
+  color: var(--color-text);
+}
+
+/* Custom shift event styling */
+.shift-event {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  height: 100%;
+  overflow: hidden;
+}
+
+.shift-event-title {
+  font-weight: 600;
+  font-size: 13px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.shift-event-time {
+  font-size: 11px;
+  opacity: 0.9;
+}
+
+.shift-event-duration {
+  font-size: 10px;
+  opacity: 0.8;
+  font-weight: 500;
+}
+
+.shift-badge {
+  display: inline-block;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 10px;
+  font-weight: 600;
+  margin-top: 2px;
+  width: fit-content;
+}
+
+.shift-badge.draft {
+  background: rgba(255, 255, 255, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+/* Shift Selection */
+.shift-event {
+  position: relative;
+}
+
+.shift-checkbox {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.shift-event.selected {
+  outline: 3px solid var(--color-primary);
+  outline-offset: -3px;
+}
+
+.rbc-event.selected {
+  box-shadow: 0 0 0 3px var(--color-primary);
+}
+
+
+/* Time slots */
+.rbc-time-slot {
+  min-height: 40px;
+}
+
+.rbc-timeslot-group {
+  min-height: 80px;
+  border-left: 1px solid var(--color-border);
+}
+
+.rbc-label {
+  color: var(--color-text-secondary);
+}
+
+.rbc-current-time-indicator {
+  background-color: var(--color-danger);
+}
+
+/* Month view */
+.rbc-month-view .rbc-event {
+  padding: 2px 4px;
+}
+
+.rbc-month-view .shift-event-title {
+  font-size: 11px;
+}
+
+.rbc-month-view .shift-event-time,
+.rbc-month-view .shift-event-duration {
+  display: none;
+}
+
+.rbc-date-cell {
+  color: var(--color-text);
+}
+
+.rbc-show-more {
+  color: var(--color-primary);
+  background-color: transparent;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .calendar-toolbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .legend {
+    font-size: 11px;
+  }
+
+  .shift-calendar-container {
+    padding: 10px;
+  }
+}
