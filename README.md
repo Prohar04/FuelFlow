@@ -383,13 +383,6 @@ docker run -p 5000:5000 -p 3000:3000 \
 
 ---
 
-## 📚 Documentation
-
-- [Installation Guide](INSTALLATION.md)
-- [Deployment Guide](DEPLOYMENT.md)
-- [Security Guide](SECURITY.md)
-- [Contributing Guidelines](CONTRIBUTING.md)
-
 ---
 
 ## 🤝 Contributing
