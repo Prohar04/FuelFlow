@@ -1,0 +1,226 @@
+.shift-modal {
+  max-width: 600px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.published-warning {
+  background: rgba(245, 158, 11, 0.1);
+  border: 1px solid var(--color-warning);
+  border-radius: 6px;
+  padding: 12px 16px;
+  margin: 0 20px 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--color-warning-dark);
+  font-size: 14px;
+}
+
+[data-theme="dark"] .published-warning {
+  background: rgba(245, 158, 11, 0.15);
+  color: var(--color-warning);
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  font-size: 14px;
+  color: var(--color-text);
+}
+
+.form-group label.required::after {
+  content: ' *';
+  color: var(--color-danger);
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--color-border);
+  background: var(--color-bg);
+  color: var(--color-text);
+  border-radius: 6px;
+  font-size: 14px;
+  font-family: inherit;
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: var(--color-text-muted);
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 60px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+.conflict-check {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px;
+  background: var(--color-bg-secondary);
+  border-radius: 6px;
+  margin-bottom: 15px;
+  font-size: 14px;
+  color: var(--color-text-secondary);
+}
+
+.spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--color-bg-tertiary);
+  border-top: 2px solid var(--color-primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.conflicts-panel {
+  background: var(--color-bg-secondary);
+  border-radius: 6px;
+  padding: 15px;
+  margin-bottom: 20px;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.conflict-item {
+  display: flex;
+  gap: 10px;
+  padding: 10px;
+  border-radius: 4px;
+  margin-bottom: 10px;
+  font-size: 13px;
+}
+
+.conflict-item:last-child {
+  margin-bottom: 0;
+}
+
+.conflict-item.error {
+  background: rgba(239, 68, 68, 0.1);
+  border-left: 4px solid var(--color-danger);
+  color: var(--color-danger-dark);
+}
+
+[data-theme="dark"] .conflict-item.error {
+  background: rgba(239, 68, 68, 0.15);
+  color: var(--color-danger);
+}
+
+.conflict-item.warning {
+  background: rgba(245, 158, 11, 0.1);
+  border-left: 4px solid var(--color-warning);
+  color: var(--color-warning-dark);
+}
+
+[data-theme="dark"] .conflict-item.warning {
+  background: rgba(245, 158, 11, 0.15);
+  color: var(--color-warning);
+}
+
+.conflict-item strong {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 12px;
+  text-transform: capitalize;
+}
+
+.conflict-item p {
+  margin: 0;
+  line-height: 1.4;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding-top: 20px;
+  border-top: 1px solid var(--color-border);
+}
+
+.btn-primary,
+.btn-secondary {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-primary {
+  background: var(--color-primary);
+  color: white;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: var(--color-primary-dark);
+}
+
+.btn-primary:disabled {
+  background: var(--color-text-muted);
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.btn-secondary {
+  background: var(--color-bg-tertiary);
+  color: var(--color-text);
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background: var(--color-border);
+}
+
+.btn-secondary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .shift-modal {
+    width: 95%;
+    max-height: 95vh;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+}
