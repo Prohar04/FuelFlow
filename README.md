@@ -404,12 +404,6 @@ Contributions welcome! Please:
 
 ---
 
-## 📄 License
-
-MIT License - see [LICENSE](LICENSE) for details
-
----
-
 ## 🙋 Support
 
 | Channel | Link |
