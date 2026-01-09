@@ -100,8 +100,6 @@ export default function DashboardLayout({ role = "admin", children }) {
           label: t("orders"),
           icon: <DollarSign size={20} />,
         },
-        // { path: '/manager/analytics', label: t('analytics'), icon: <BarChart3 size={20} /> },
-        // { path: '/manager/reports', label: t('reports'), icon: <FileText size={20} /> },
       ],
       cashier: [
         {
@@ -118,6 +116,28 @@ export default function DashboardLayout({ role = "admin", children }) {
           path: "/cashier/history",
           label: t("salesHistory") || "Sales History",
           icon: <Receipt size={20} />,
+        },
+      ],
+      employee: [
+        {
+          path: "/employee/dashboard",
+          label: t("dashboard"),
+          icon: <LayoutDashboard size={20} />,
+        },
+        {
+          path: "/employee/attendance",
+          label: t("attendance"),
+          icon: <Calendar size={20} />,
+        },
+        {
+          path: "/employee/shifts",
+          label: t("shifts"),
+          icon: <Clock size={20} />,
+        },
+        {
+          path: "/employee/payroll",
+          label: t("payroll"),
+          icon: <Wallet size={20} />,
         },
       ],
     };

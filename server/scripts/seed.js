@@ -75,130 +75,126 @@ const seedData = async () => {
     });
     console.log(`✅ Admin created: ${admin.email} (password: password123)`);
 
-    // 2. Create Pumps
-    console.log("\n⛽ Creating pump locations...");
-    const pump1 = await Pump.create({
-      name: "Main Station",
-      address: {
-        street: "123 Main Street",
-        city: "Dhaka",
-        state: "Dhaka Division",
-        zipCode: "1000",
-      },
-      location: {
-        type: "Point",
-        coordinates: [90.4125, 23.8103], // Dhaka coordinates
-      },
-      status: "active",
-      createdBy: admin._id,
-    });
+    // 2. Create 20 Pump Stations in Bangladesh
+    console.log("\n⛽ Creating 20 petrol pump stations in Bangladesh...");
+    const bangladeshLocations = [
+      { name: "Dhaka Main Station", city: "Dhaka", coords: [90.4125, 23.8103] },
+      { name: "Mirpur Station", city: "Dhaka", coords: [90.3504, 23.8103] },
+      { name: "Gulshan Station", city: "Dhaka", coords: [90.4221, 23.8127] },
+      { name: "Dhanmondi Station", city: "Dhaka", coords: [90.3667, 23.7469] },
+      { name: "Motijheel Station", city: "Dhaka", coords: [90.4167, 23.7594] },
+      { name: "Chittagong Port Station", city: "Chittagong", coords: [91.8318, 22.3569] },
+      { name: "Chittagong Hill Station", city: "Chittagong", coords: [91.8413, 22.3431] },
+      { name: "Sylhet City Station", city: "Sylhet", coords: [91.8667, 24.9083] },
+      { name: "Khulna Central Station", city: "Khulna", coords: [89.5667, 22.8456] },
+      { name: "Rajshahi Highway Station", city: "Rajshahi", coords: [88.5667, 24.3667] },
+      { name: "Barisal Canal Station", city: "Barisal", coords: [90.3675, 22.6977] },
+      { name: "Rangpur Northern Station", city: "Rangpur", coords: [89.2667, 25.7439] },
+      { name: "Mymensingh Town Station", city: "Mymensingh", coords: [90.4167, 24.7471] },
+      { name: "Comilla Eastern Station", city: "Comilla", coords: [91.1833, 23.4667] },
+      { name: "Gazipur Industrial Station", city: "Gazipur", coords: [90.4167, 23.9945] },
+      { name: "Narayanganj River Station", city: "Narayanganj", coords: [90.5, 23.6228] },
+      { name: "Tangail Northern Highway", city: "Tangail", coords: [89.9167, 24.25] },
+      { name: "Pabna Central Station", city: "Pabna", coords: [89.2333, 23.9167] },
+      { name: "Jessore Western Border", city: "Jessore", coords: [89.1667, 23.1667] },
+      { name: "Cox's Bazar Beach Station", city: "Cox's Bazar", coords: [92.0, 21.45] },
+    ];
 
-    const pump2 = await Pump.create({
-      name: "Highway Station",
-      address: {
-        street: "456 Highway Road",
-        city: "Chittagong",
-        state: "Chittagong Division",
-        zipCode: "4000",
-      },
-      location: {
-        type: "Point",
-        coordinates: [91.8318, 22.3569], // Chittagong coordinates
-      },
-      status: "active",
-      createdBy: admin._id,
-    });
+    const pumps = [];
+    for (const location of bangladeshLocations) {
+      const pump = await Pump.create({
+        name: location.name,
+        address: {
+          street: `${Math.floor(Math.random() * 1000) + 1} ${location.name} Road`,
+          city: location.city,
+          state: location.city + " Division",
+          zipCode: `${Math.floor(Math.random() * 9000) + 1000}`,
+        },
+        location: {
+          type: "Point",
+          coordinates: location.coords,
+        },
+        status: "active",
+        createdBy: admin._id,
+      });
+      pumps.push(pump);
+      console.log(`✅ ${location.name} (Code: ${pump.code})`);
+    }
 
-    console.log(`✅ Created pump: ${pump1.name} (Code: ${pump1.code})`);
-    console.log(`✅ Created pump: ${pump2.name} (Code: ${pump2.code})`);
+    const pump1 = pumps[0];
+    const pump2 = pumps[1];
 
-    // 3. Create Managers
-    console.log("\n👔 Creating managers...");
-    const manager1 = await User.create({
-      name: "John Manager",
-      email: "john.manager@fuelflow.com",
-      passwordHash: "password123",
-      role: "manager",
-      jobTitle: "Station Manager",
-      pumpId: pump1._id,
-      status: "active",
-    });
+    // 3. Create Managers for Each Station
+    console.log("\n👔 Creating managers for each station...");
+    const managers = [];
+    const managerNames = [
+      "Rajesh Kumar", "Priya Sharma", "Mohammed Ali", "Fatima Khan", "Amit Singh",
+      "Neha Verma", "Hassan Ahmed", "Zainab Malik", "Vikram Patel", "Anjali Roy",
+      "Karim Hassan", "Divya Nair", "Ravi Gupta", "Meera Joshi", "Imran Khan",
+      "Pooja Singh", "Anil Kumar", "Sneha Desai", "Arjun Reddy", "Isha Mehta"
+    ];
 
-    const manager2 = await User.create({
-      name: "Sarah Manager",
-      email: "sarah.manager@fuelflow.com",
-      passwordHash: "password123",
-      role: "manager",
-      jobTitle: "Station Manager",
-      pumpId: pump2._id,
-      status: "active",
-    });
+    for (let i = 0; i < pumps.length; i++) {
+      const manager = await User.create({
+        name: managerNames[i],
+        email: `manager${i + 1}@fuelflow.com`,
+        passwordHash: "password123",
+        role: "manager",
+        jobTitle: "Station Manager",
+        pumpId: pumps[i]._id,
+        status: "active",
+      });
+      managers.push(manager);
+      console.log(`✅ ${manager.name} - ${pumps[i].name}`);
+    }
 
-    console.log(`✅ ${manager1.name} - ${pump1.name}`);
-    console.log(`✅ ${manager2.name} - ${pump2.name}`);
+    // 4. Create 50 Employees Across Different Stations
+    console.log("\n👷 Creating 50 employees across all stations...");
+    const employeeRoles = ["Fuel Attendant", "Cashier", "Security Guard", "Maintenance Staff", "Cleaning Staff"];
+    const employeeNames = [
+      "Ahmed Hassan", "Fatima Ali", "Mohammed Rahman", "Zainab Khan", "Karim Ibrahim",
+      "Aisha Malik", "Hassan Ahmed", "Leila Hassan", "Ibrahim Ali", "Noor Khan",
+      "Samir Khan", "Hana Ali", "Tariq Hassan", "Amina Ahmed", "Walid Ibrahim",
+      "Layla Malik", "Rashid Ahmed", "Yasmin Khan", "Saeed Hassan", "Nadia Ali",
+      "Faisal Khan", "Lena Ahmed", "Omar Hassan", "Salma Malik", "Jamal Ibrahim",
+      "Huda Khan", "Mustafa Ali", "Dalila Ahmed", "Hamza Hassan", "Rania Malik",
+      "Aziz Khan", "Layla Hassan", "Nidal Ahmed", "Samira Khan", "Khalil Ali",
+      "Soraya Malik", "Adel Hassan", "Noura Ahmed", "Malik Khan", "Rana Ali",
+      "Sami Hassan", "Laila Malik", "Amin Ahmed", "Rima Khan", "Saif Ali",
+      "Salma Hassan", "Nasim Malik", "Nadia Ahmed", "Rafiq Khan", "Yasir Ali"
+    ];
 
-    // 4. Create Cashiers
-    console.log("\n💰 Creating cashiers...");
-    const cashier1 = await User.create({
-      name: "Alice Cashier",
-      email: "alice.cashier@fuelflow.com",
-      passwordHash: "password123",
-      role: "cashier",
-      jobTitle: "Cashier",
-      pumpId: pump1._id,
-      status: "active",
-    });
+    const allEmployees = [];
+    let employeeIndex = 0;
 
-    const cashier2 = await User.create({
-      name: "Bob Cashier",
-      email: "bob.cashier@fuelflow.com",
-      passwordHash: "password123",
-      role: "cashier",
-      jobTitle: "Cashier",
-      pumpId: pump2._id,
-      status: "active",
-    });
+    // Distribute employees across stations (2-3 per station)
+    for (let i = 0; i < pumps.length; i++) {
+      const employeesPerStation = i < 10 ? 3 : 2; // More employees at first few stations
+      
+      for (let j = 0; j < employeesPerStation; j++) {
+        if (employeeIndex < 50) {
+          const employee = await User.create({
+            name: employeeNames[employeeIndex],
+            email: `employee${employeeIndex + 1}@fuelflow.com`,
+            passwordHash: "password123",
+            role: "employee",
+            jobTitle: employeeRoles[Math.floor(Math.random() * employeeRoles.length)],
+            pumpId: pumps[i]._id,
+            status: "active",
+          });
+          allEmployees.push({
+            id: employee._id,
+            pump: pumps[i]._id,
+            name: employee.name,
+            stationName: pumps[i].name,
+          });
+          console.log(`✅ ${employee.name} (${employee.jobTitle}) - ${pumps[i].name}`);
+          employeeIndex++;
+        }
+      }
+    }
 
-    const cashier3 = await User.create({
-      name: "Cashier One",
-      email: "cashier1@fuelflow.com",
-      passwordHash: "password123",
-      role: "cashier",
-      jobTitle: "Cashier",
-      pumpId: pump1._id,
-      status: "active",
-    });
-
-    console.log(`✅ ${cashier1.name} - ${pump1.name}`);
-    console.log(`✅ ${cashier2.name} - ${pump2.name}`);
-    console.log(`✅ ${cashier3.name} - ${pump1.name}`);
-
-    // 5. Create Employees
-    console.log("\n👷 Creating employees...");
-    const employee1 = await User.create({
-      name: "David Employee",
-      email: "david.employee@fuelflow.com",
-      passwordHash: "password123",
-      role: "employee",
-      jobTitle: "Fuel Attendant",
-      pumpId: pump1._id,
-      status: "active",
-    });
-
-    const employee2 = await User.create({
-      name: "Emma Employee",
-      email: "emma.employee@fuelflow.com",
-      passwordHash: "password123",
-      role: "employee",
-      jobTitle: "Security Guard",
-      pumpId: pump2._id,
-      status: "active",
-    });
-
-    console.log(`✅ ${employee1.name} - ${pump1.name}`);
-    console.log(`✅ ${employee2.name} - ${pump2.name}`);
-
-    // 6. Create Fuel Prices
+    // 5. Create Fuel Prices
     console.log("\n💵 Setting fuel prices...");
     const prices = [
       {
@@ -226,7 +222,7 @@ const seedData = async () => {
       console.log(`✅ ${priceData.fuelType}: ৳${priceData.unitPrice}/L`);
     }
 
-    // 7. Create Suppliers
+    // 6. Create Suppliers
     console.log("\n🚚 Creating suppliers...");
     const supplier1 = await Supplier.create({
       companyName: "Padma Oil Company",
@@ -263,72 +259,60 @@ const seedData = async () => {
     console.log(`✅ ${supplier1.companyName}`);
     console.log(`✅ ${supplier2.companyName}`);
 
-    // 8. Create Inventory Config
+    // 7. Create Inventory Config for all pumps
     console.log("\n📦 Setting inventory thresholds...");
-    const inventoryConfigs = [
-      { pumpId: pump1._id, fuelType: "Petrol", lowStockThreshold: 500 },
-      { pumpId: pump1._id, fuelType: "Diesel", lowStockThreshold: 400 },
-      { pumpId: pump1._id, fuelType: "Octane", lowStockThreshold: 300 },
-      { pumpId: pump2._id, fuelType: "Petrol", lowStockThreshold: 600 },
-      { pumpId: pump2._id, fuelType: "Diesel", lowStockThreshold: 500 },
-    ];
+    const inventoryConfigs = [];
+    for (const pump of pumps) {
+      inventoryConfigs.push(
+        { pumpId: pump._id, fuelType: "Petrol", lowStockThreshold: 500 },
+        { pumpId: pump._id, fuelType: "Diesel", lowStockThreshold: 400 },
+        { pumpId: pump._id, fuelType: "Octane", lowStockThreshold: 300 }
+      );
+    }
 
     for (const config of inventoryConfigs) {
       await InventoryConfig.create(config);
     }
     console.log(`✅ Created ${inventoryConfigs.length} inventory configs`);
 
-    // 9. Create Initial Inventory Stock
+    // 8. Create Initial Inventory Stock for all pumps
     console.log("\n📊 Adding initial inventory...");
-    const initialStock = [
-      {
-        pumpId: pump1._id,
-        fuelType: "Petrol",
-        quantity: 5000,
-        type: "stock_in",
-        refType: "manual",
-        notes: "Initial stock",
-      },
-      {
-        pumpId: pump1._id,
-        fuelType: "Diesel",
-        quantity: 4000,
-        type: "stock_in",
-        refType: "manual",
-        notes: "Initial stock",
-      },
-      {
-        pumpId: pump1._id,
-        fuelType: "Octane",
-        quantity: 3000,
-        type: "stock_in",
-        refType: "manual",
-        notes: "Initial stock",
-      },
-      {
-        pumpId: pump2._id,
-        fuelType: "Petrol",
-        quantity: 6000,
-        type: "stock_in",
-        refType: "manual",
-        notes: "Initial stock",
-      },
-      {
-        pumpId: pump2._id,
-        fuelType: "Diesel",
-        quantity: 5000,
-        type: "stock_in",
-        refType: "manual",
-        notes: "Initial stock",
-      },
-    ];
+    const initialStock = [];
+    for (const pump of pumps) {
+      initialStock.push(
+        {
+          pumpId: pump._id,
+          fuelType: "Petrol",
+          quantity: 5000,
+          type: "stock_in",
+          refType: "manual",
+          notes: "Initial stock",
+        },
+        {
+          pumpId: pump._id,
+          fuelType: "Diesel",
+          quantity: 4000,
+          type: "stock_in",
+          refType: "manual",
+          notes: "Initial stock",
+        },
+        {
+          pumpId: pump._id,
+          fuelType: "Octane",
+          quantity: 3000,
+          type: "stock_in",
+          refType: "manual",
+          notes: "Initial stock",
+        }
+      );
+    }
 
     for (const stock of initialStock) {
       await InventoryLedger.create(stock);
     }
     console.log(`✅ Added initial inventory for all pumps`);
 
-    // 10. Create Sample Sales (100+ across 6 months)
+    // 9. Create Sample Sales (100+ across 6 months) - Using all stations
     console.log("\n🛒 Creating comprehensive sales data (6 months)...");
     const fuelTypes = ["Petrol", "Diesel", "Octane"];
     const salesData = [];
@@ -340,7 +324,7 @@ const seedData = async () => {
       monthDate.setMonth(monthDate.getMonth() - monthOffset);
       const daysInMonth = new Date(monthDate.getFullYear(), monthDate.getMonth() + 1, 0).getDate();
       
-      // Generate 50-70 sales per month (realistic daily fuel sales)
+      // Generate 50-70 sales per month across all pumps (realistic daily fuel sales)
       const salesPerMonth = 50 + Math.floor(Math.random() * 20);
       for (let i = 0; i < salesPerMonth; i++) {
         const saleDate = new Date(monthDate);
@@ -351,10 +335,13 @@ const seedData = async () => {
         const fuelPrice = fuelType === "Petrol" ? 120.5 : fuelType === "Diesel" ? 110.0 : 135.0;
         const quantity = 20 + Math.floor(Math.random() * 80); // Larger quantities for realistic data
 
-        const isPump1 = Math.random() > 0.5;
+        const randomPump = pumps[Math.floor(Math.random() * pumps.length)];
+        const pumpEmployees = allEmployees.filter(emp => emp.pump.toString() === randomPump._id.toString());
+        const randomEmployee = pumpEmployees[Math.floor(Math.random() * pumpEmployees.length)];
+        
         const sale = await Sale.create({
-          pumpId: isPump1 ? pump1._id : pump2._id,
-          cashierId: isPump1 ? (Math.random() > 0.5 ? cashier1._id : cashier3._id) : cashier2._id,
+          pumpId: randomPump._id,
+          cashierId: randomEmployee ? randomEmployee.id : allEmployees[0].id,
           fuelType,
           quantity,
           unitPrice: fuelPrice,
@@ -362,7 +349,7 @@ const seedData = async () => {
           createdAt: saleDate,
         });
 
-        const pumpCode = isPump1 ? pump1.code : pump2.code;
+        const pumpCode = randomPump.code;
         const dateStr = saleDate.toISOString().split("T")[0].replace(/-/g, "");
         const receiptNo = `${pumpCode}/${dateStr}/${String(saleCount + 1).padStart(4, "0")}`;
         
@@ -391,7 +378,7 @@ const seedData = async () => {
     }
     console.log(`✅ Created ${saleCount} sales across 6 months`);
 
-    // 11. Create Refill Orders (50+ across 6 months)
+    // 10. Create Refill Orders (50+ across 6 months) - All stations
     console.log("\n🚚 Creating refill orders (6 months)...");
     let refillCount = 0;
     for (let monthOffset = 5; monthOffset >= 0; monthOffset--) {
@@ -408,11 +395,12 @@ const seedData = async () => {
         const fuelType = fuelTypes[Math.floor(Math.random() * fuelTypes.length)];
         const quantity = 1000 + Math.floor(Math.random() * 2000);
         const supplier = Math.random() > 0.5 ? supplier1 : supplier2;
-        const isPump1 = Math.random() > 0.5;
+        const randomPump = pumps[Math.floor(Math.random() * pumps.length)];
+        const pumpManager = managers[pumps.indexOf(randomPump)];
 
         const order = await RefillOrder.create({
-          pumpId: isPump1 ? pump1._id : pump2._id,
-          managerId: isPump1 ? manager1._id : manager2._id,
+          pumpId: randomPump._id,
+          managerId: pumpManager._id,
           supplierId: supplier._id,
           items: [{
             fuelType,
@@ -429,15 +417,8 @@ const seedData = async () => {
     }
     console.log(`✅ Created ${refillCount} refill orders across 6 months`);
 
-    // 12. Create Attendance Records (100+ across 6 months)
+    // 11. Create Attendance Records (600+ across 6 months) - All 50 employees
     console.log("\n📅 Creating attendance records (6 months)...");
-    const allEmployees = [
-      { id: cashier1._id, pump: pump1._id },
-      { id: cashier2._id, pump: pump2._id },
-      { id: cashier3._id, pump: pump1._id },
-      { id: employee1._id, pump: pump1._id },
-      { id: employee2._id, pump: pump2._id },
-    ];
     let attendanceCount = 0;
 
     for (let monthOffset = 5; monthOffset >= 0; monthOffset--) {
@@ -502,6 +483,10 @@ const seedData = async () => {
         const deductions = Math.floor(grossPay * 0.1);
         const netPay = grossPay - deductions;
 
+        // Find the appropriate manager for this employee's station
+        const pumpIndex = pumps.findIndex(p => p._id.toString() === emp.pump.toString());
+        const manager = managers[pumpIndex] || managers[0];
+
         await Payroll.create({
           userId: emp.id,
           pumpId: emp.pump,
@@ -525,7 +510,7 @@ const seedData = async () => {
           netPay,
           paymentStatus: "given",
           paidAt: periodEnd,
-          paidBy: manager1._id,
+          paidBy: manager._id,
         });
 
         payrollCount++;
@@ -533,7 +518,7 @@ const seedData = async () => {
     }
     console.log(`✅ Created ${payrollCount} payroll records across 6 months`);
 
-    // 14. Create Shift Schedules (100+ across 6 months)
+    // 12. Create Shift Schedules (600+ across 6 months) - All employees
     console.log("\n🕐 Creating shift schedules (6 months)...");
     let shiftCount = 0;
     const shiftTypes = [
@@ -562,18 +547,20 @@ const seedData = async () => {
           }
           endTime.setHours(shiftType.end, 0, 0, 0);
 
-          // Determine role: cashier employees are cashiers, others are fuelBoy
-          const isCashier = emp.id.toString() === cashier1._id.toString() || emp.id.toString() === cashier2._id.toString() || emp.id.toString() === cashier3._id.toString();
-          const role = isCashier ? 'cashier' : ['fuelBoy', 'security', 'general'][Math.floor(Math.random() * 3)];
+          // Find the appropriate manager for this employee's station
+          const pumpIndex = pumps.findIndex(p => p._id.toString() === emp.pump.toString());
+          const manager = managers[pumpIndex] || managers[0];
+
+          const roleRequired = ['fuelBoy', 'cashier', 'security', 'general', 'maintenance'][Math.floor(Math.random() * 5)];
 
           await Shift.create({
             pumpId: emp.pump,
             employeeId: emp.id,
-            roleRequired: role,
+            roleRequired,
             startAt: startTime,
             endAt: endTime,
             status: 'published',
-            createdBy: manager1._id,
+            createdBy: manager._id,
             createdAt: shiftDate,
           });
 
@@ -583,11 +570,14 @@ const seedData = async () => {
     }
     console.log(`✅ Created ${shiftCount} shift schedules across 6 months`);
 
-    // 15. Summary
+    // 13. Summary
     console.log("\n🎉 Database seeded successfully!\n");
     console.log("═══════════════════════════════════════");
     console.log("📊 Data Summary:");
     console.log("═══════════════════════════════════════");
+    console.log(`✅ Stations: ${pumps.length}`);
+    console.log(`✅ Managers: ${managers.length}`);
+    console.log(`✅ Employees: ${allEmployees.length}`);
     console.log(`✅ Sales: ${saleCount} records`);
     console.log(`✅ Refill Orders: ${refillCount} records`);
     console.log(`✅ Attendance: ${attendanceCount} records`);
@@ -597,21 +587,14 @@ const seedData = async () => {
     console.log("📝 Test Credentials:");
     console.log("═══════════════════════════════════════");
     console.log("Admin:    admin@fuelflow.com / password123");
-    console.log(
-      `Manager:  john.manager@fuelflow.com / password123 (${pump1.name})`
-    );
-    console.log(
-      `Manager:  sarah.manager@fuelflow.com / password123 (${pump2.name})`
-    );
-    console.log(
-      `Cashier:  alice.cashier@fuelflow.com / password123 (${pump1.name})`
-    );
-    console.log(
-      `Cashier:  cashier1@fuelflow.com / password123 (${pump1.name})`
-    );
-    console.log(
-      `Employee: david.employee@fuelflow.com / password123 (${pump1.name})`
-    );
+    console.log("\nManagers (Sample):");
+    for (let i = 0; i < Math.min(3, managers.length); i++) {
+      console.log(`  manager${i + 1}@fuelflow.com / password123 (${pumps[i].name})`);
+    }
+    console.log("\nEmployees (Sample):");
+    for (let i = 0; i < Math.min(3, allEmployees.length); i++) {
+      console.log(`  employee${i + 1}@fuelflow.com / password123 (${allEmployees[i].stationName})`);
+    }
     console.log("═══════════════════════════════════════\n");
 
     process.exit(0);
