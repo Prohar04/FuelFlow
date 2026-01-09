@@ -416,7 +416,6 @@ MIT License - see [LICENSE](LICENSE) for details
 |---------|------|
 | **Email** | support@fuelflow.com |
 | **Issues** | [GitHub Issues](https://github.com/yourusername/fuelflow/issues) |
-| **Wiki** | [Documentation](https://github.com/yourusername/fuelflow/wiki) |
 
 ---
 
