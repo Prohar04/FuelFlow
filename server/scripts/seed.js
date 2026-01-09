@@ -551,7 +551,7 @@ const seedData = async () => {
           const pumpIndex = pumps.findIndex(p => p._id.toString() === emp.pump.toString());
           const manager = managers[pumpIndex] || managers[0];
 
-          const roleRequired = ['fuelBoy', 'cashier', 'security', 'general', 'maintenance'][Math.floor(Math.random() * 5)];
+          const roleRequired = ['fuelBoy', 'cashier', 'security', 'general'][Math.floor(Math.random() * 4)];
 
           await Shift.create({
             pumpId: emp.pump,
