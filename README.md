@@ -2,8 +2,8 @@
 
 <div align="center">
 
-[![GitHub License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-[![Production Ready](https://img.shields.io/badge/status-Production%20Ready-brightgreen.svg)](https://github.com)
+[![GitHub License](https://img.shields.io/badge/license-MIT-blue.svg)](#license)
+[![Production Ready](https://img.shields.io/badge/status-Production%20Ready-brightgreen.svg)](#-deployment)
 [![Node.js](https://img.shields.io/badge/Node.js-v18%2B-green.svg)](https://nodejs.org)
 [![React](https://img.shields.io/badge/React-v18-blue.svg)](https://react.dev)
 [![MongoDB](https://img.shields.io/badge/MongoDB-Atlas-13aa52.svg)](https://www.mongodb.com)
@@ -174,8 +174,8 @@ CORS                  // Cross-origin support
 
 **1. Clone Repository**
 ```bash
-git clone https://github.com/yourusername/fuelflow.git
-cd fuelflow
+git clone https://github.com/Prohar04/FuelFlow.git
+cd FuelFlow
 ```
 
 **2. Backend Setup**
@@ -386,10 +386,10 @@ docker run -p 5000:5000 -p 3000:3000 \
 
 ## 📚 Documentation
 
-- [API Documentation](docs/API.md)
-- [Admin Guide](docs/admin-guide.md)
-- [Database Schema](docs/DATABASE.md)
-- [Security Guide](docs/SECURITY.md)
+- [Installation Guide](INSTALLATION.md)
+- [Deployment Guide](DEPLOYMENT.md)
+- [Security Guide](SECURITY.md)
+- [Contributing Guidelines](CONTRIBUTING.md)
 
 ---
 
@@ -414,8 +414,7 @@ MIT License - see [LICENSE](LICENSE) for details
 
 | Channel | Link |
 |---------|------|
-| **Email** | support@fuelflow.com |
-| **Issues** | [GitHub Issues](https://github.com/yourusername/fuelflow/issues) |
+| **Issues** | [GitHub Issues](https://github.com/Prohar04/FuelFlow/issues) |
 
 ---
 
